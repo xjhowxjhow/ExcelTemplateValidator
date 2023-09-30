@@ -1,0 +1,8 @@
+{
+    "number_type": "p",
+    "export_excel_pinter_row_limit": 0,
+    "export_excel_pinter_collum_limit": 0,
+    "default_export_format": "csv",
+    "max_thread_pool": 100,
+    "thread_pool_validator": 10
+}

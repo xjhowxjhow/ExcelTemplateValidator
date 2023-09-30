@@ -1,0 +1,28 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>icon.png</file>
+  </qresource>
+  <qresource prefix="iconexe">
+    <file>ico.ico</file>
+  </qresource>
+  <qresource prefix="newicons">
+    <file>newicons/edit.png</file>
+    <file>newicons/save.png</file>
+    <file>newicons/excel.png</file>
+    <file>newicons/excelimport.png</file>
+    <file>newicons/add.png</file>
+    <file>newicons/insert-row.png</file>
+    <file>newicons/remove.png</file>
+    <file>newicons/console.png</file>
+    <file>newicons/lupa.png</file>
+    <file>newicons/exit.png</file>
+    <file>newicons/import-file.png</file>
+    <file>newicons/openfolder.png</file>
+    <file>newicons/start.png</file>
+    <file>newicons/cil-arrow-bottom.png</file>
+    <file>newicons/cube-validate.png</file>
+    <file>newicons/validadte.png</file>
+    <file>newicons/config.png</file>
+    <file>newicons/home.png</file>
+  </qresource>
+</RCC>
