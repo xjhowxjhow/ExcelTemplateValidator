@@ -20,7 +20,6 @@ from models.InputTemplateTable import TemplateInput, WorkerThread
 from models.ValidadorTemplate import ValidadorTemplate, WorkerThreadValidacao
 from models.PainterAndTolltype import WorkerPainterThread
 from models.ExportDataFrame import ExportDataFrame
-from models.ValidadorDuplicatas import WorkerValidadorDuplicadas
 # ALERTS
 from models.MessageDialogBox import MessageDialogBox
 from models.LoggerWidget import LoggerWidget
