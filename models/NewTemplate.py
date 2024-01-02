@@ -175,12 +175,11 @@ class NewTemplate(QTableWidget):
         # Set UPPERCASE
         if column == 1:
             self.item(row, column).setText(
-                self.item(row, column).text().upper().strip())
+                self.item(row, column).text().strip())
 
         if column == 6:
             # Valida lista separada por ;
-            list_item = self.item(row, column).text().split(
-                ";")  # Separa por ;
+            list_item = self.item(row, column).text().split(";")  # Separa por ;
             # REMOVE Quebra de linha
             # Remove espaços em branco
             list_item = list(map(lambda s: s.strip(), list_item))
@@ -189,7 +188,7 @@ class NewTemplate(QTableWidget):
             list_item = list(dict.fromkeys(list_item))
             list_item = ";".join(list_item)  # Junta novamente com ;
 
-            self.item(row, column).setText(list_item.upper().strip())
+            self.item(row, column).setText(list_item.strip())
 
     def _Cell_Clicked(self, row, column):
         # Set UPPERCASE

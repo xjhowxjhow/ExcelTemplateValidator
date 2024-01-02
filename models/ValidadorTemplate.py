@@ -132,62 +132,43 @@ class WorkerThreadValidacao(QRunnable):
 
 
     def run(self):
-        def sun_erros():
-            self.qt_erros += 1
         try:
             self.dict_erros_temp = {"erros": []}
             self.qt_erros = 0
             self.signals.progressbar_text.emit(f"Validando Linhas...")
             
-            for row_idx, row in self.data.iterrows():
-                for col_idx in range(len(self.data.columns)):
 
-                    item_value = row[col_idx]
-                    field_name = self.data.columns[col_idx]
-                    empty_f = self._VerifyEmptyField(item_value)
-                    obrigatorio_f = self._VerifyObrigatorio(field_name)
+
+            #------------------------------------------------------------
+            obrigatorio_columns = {col: self._VerifyObrigatorio(col) for col in self.data.columns}
+            type_columns = {col: self._VerifyTypeField(col) for col in self.data.columns}
+            tamanho_columns = {col: self._VerifyTamanho(col) for col in self.data.columns}
+            only_list_values_columns = {col: self._VerifyOnlyListValues(col) for col in self.data.columns}
+            unique_values_columns = {col: self._VerifyUniqueValues(col) for col in self.data.columns}
+
+            for col in self.data.columns:
+                obrigatorio_f = obrigatorio_columns[col]
+                type_f = type_columns[col]
+                tamanho_f = tamanho_columns[col]
+                only_list_values_f = only_list_values_columns[col]
+                unique_values_f = unique_values_columns[col]
+                column = self.data[col]
+
+                self._process_column(field_name=col, column=column, obrigatorio_f=obrigatorio_f, type_f=type_f, tamanho_f=tamanho_f, only_list_values_f=only_list_values_f, unique_values_f=unique_values_f)
 
                     
+                count_collumns = self.data.columns.shape[0]
+                columns_actally = self.data.columns.tolist().index(col) + 1
+                progress_percent = int((columns_actally / count_collumns) * 100)
+                self.signals.progressbar_value.emit(progress_percent)
+                self.signals.progressbar_text.emit(f"job Validando Coluna nome: {col} - {columns_actally}/{count_collumns} - {progress_percent}%")
 
-                    if obrigatorio_f == "1" and empty_f == True:
-                        self._AppendErros(row=row_idx,col= col_idx,field_name= field_name,error= "Campo Obrigatorio não pode ser vazio")
-                        sun_erros()
-                        continue
-
-                    elif obrigatorio_f == "0" and empty_f == True:
-                        continue
-
-                    type_f = self._VerifyTypeField(field_name)
-                    v_type_f = self._ValidaTipo(type_f, item_value)
-
-                    if v_type_f == False:
-                        self._AppendErros(row=row_idx,col= col_idx,field_name= field_name,error= f"Tipo de Valor invalido, é esperado {type_f}")
-                        sun_erros()
-
-                    tamanho_f = self._VerifyTamanho(field_name)
-                    v_tamanho_f = self._ValidaTamanho(tamanho_f, item_value)
-
-                    if v_tamanho_f == False:
-                        self._AppendErros(row=row_idx,col= col_idx,field_name= field_name,error= f"Tamanho do campo invalido, o maximo permitido é de {tamanho_f} caracteres")
-                        sun_erros()
-
-                    only_list_values_f = self._VerifyOnlyListValues(field_name)
-                    if only_list_values_f == "1":
-                        list_values_f = self._VerifyListValues(field_name)
-                        if str(item_value).upper() not in list_values_f.split(";"):
-                            self._AppendErros(row=row_idx,col= col_idx,field_name= field_name,error= f"Valor invalido, não esta na lista de valores validos")
-                            sun_erros()
-
-
-                    self.signals.progressbar_value.emit(int((row_idx/len(self.data))*100))
-                    
-
-            self.signals.progressbar_value.emit(0)
+            
 
 
         except Exception as e:
             print(e)
-            self.signals.validate_duplicatas.emit()
+            # self.signals.validate_duplicatas.emit()
             self.signals.finished.emit()
 
 
@@ -196,12 +177,94 @@ class WorkerThreadValidacao(QRunnable):
 
 
         self.signals.finished_erros.emit(self.qt_erros)
-        self.signals.validate_duplicatas.emit()
+        # self.signals.validate_duplicatas.emit()
         self.signals.finished.emit()
 
 
+
+
+
+    def _process_column(self, field_name, column:pd.Series, obrigatorio_f, type_f, tamanho_f, only_list_values_f, unique_values_f):
+
+
+
+        series = column                         # aplica a as validacoes para cada coluna 
+        series_empty = series.eq("").all()      #verifica se toda a coluna é uma string vazia
+        
+        #// Coluna Obrigatória e toda Vazia
+        if obrigatorio_f == "1" and series_empty: 
+                                                                                                                                    
+            self._AppendErros(row=series.index, col=field_name, field_name=field_name, error="Campo Obrigatorio não pode ser vazio")      # adiciona todos os indices da coluna que são vazios passa o range
+            self.qt_erros += series.shape[0] 
+
+        #// Coluna Não Obrigatória e toda Vazia
+        elif obrigatorio_f == "0" and series_empty:
+            pass
+
+        #// Coluna Não Obrigatória e Obrigatorias Com Valores
+        elif obrigatorio_f == "0" and not series_empty or obrigatorio_f == "1" and not series_empty:
+            
+            #ignora indices vazios apenas para colunas não obrigatorias
+            if obrigatorio_f == "0":
+                series = series[series.ne("")] 
+                series = series[series.notnull()]
+        
+            if obrigatorio_f == "1" and not series_empty:
+
+                series_null = series[series.eq("")]
+                if series_null.shape[0] > 0:
+                    self._AppendErros(row=series_null.index, col=field_name, field_name=field_name, error="Campo Obrigatorio não pode ser vazio")
+                    self.qt_erros += series_null.shape[0]
+                
+                series = series[series.ne("")]
+            
+            #// Verifica se o tipo da coluna é válido
+            series_type = series.apply(lambda x: self._ValidaTipo(tipo=type_f, valor=x))
+            series_type = series_type[series_type == False]
+            if series_type.shape[0] > 0:
+                self._AppendErros(row=series_type.index, col=field_name, field_name=field_name, error=f"Tipo Inválido Esperado: {type_f}")
+                self.qt_erros += series_type.shape[0]
+
+            #// Verifica se o tamanho da coluna é válido
+            series_tamanho = series.apply(lambda x: self._ValidaTamanho(tamanho_real=tamanho_f, valor=x))
+            series_tamanho = series_tamanho[series_tamanho == False]
+            if series_tamanho.shape[0] > 0:
+                self._AppendErros(row=series_tamanho.index, col=field_name, field_name=field_name, error=f"Tamanho Inválido Esperado: {tamanho_f}")
+                self.qt_erros += series_tamanho.shape[0]
+
+            #// Verifica se o valor da coluna é válido
+            if only_list_values_f == "1":
+                list_values = self._VerifyListValues(field_name).split(";") # lista de valores validos para essa coluna
+                
+                def check_in_list(valor):
+                    return valor.upper() in list_values
+                
+                series_only_list_values = series.apply(lambda x: check_in_list(x))
+                series_only_list_values = series_only_list_values[series_only_list_values == False]
+                if series_only_list_values.shape[0] > 0:
+                    self._AppendErros(row=series_only_list_values.index, col=field_name, field_name=field_name, error=f"Valor inválido, não está na lista de valores válidos")
+                    self.qt_erros += series_only_list_values.shape[0]
+
+                
+            #// Verifica se os valores da coluna são únicos
+            if unique_values_f == "1":
+                series_unique_values = series[series.duplicated(keep=False)]
+                if series_unique_values.shape[0] > 0:
+                    self._AppendErros(row=series_unique_values.index, col=field_name, field_name=field_name, error=f"Coluna de valores Unico, esse valor está duplicado")
+                    self.qt_erros += series_unique_values.shape[0]
+
+            
+            #// Fim das validações
+        
+
+
+
+
+
+
     def _AppendErros(self, row, col, field_name, error):
-        self.dict_erros_temp["erros"].append({"row": row, "col": col, "field_name": field_name, "error": error})
+        self.dict_erros_temp["erros"].extend([{"row": r, "col": col, "field_name": field_name, "error": error} for r in row])
+
 
 
 
@@ -444,20 +507,18 @@ class ValidadorTemplate(QTableView):
         self.setModel(self.modelo)
 
 
-    #TESTE
-    def _SetToollTipUnique(self, index):
-        self.modelo.setTooltip(index[0], index[1], index[2])
-    #TESTE
-    def _ChangeColorUnique(self, index):
-        self.delegate.setCellColor(index[0], index[1], index[2])
+
 
     def _SetTollTip(self, index):
         for idx in index:
-            self.modelo.setTooltip(idx[0], idx[1], idx[2])
+            col = self.headers.index(idx[1]) #pega o index da coluna pelo nome
+            self.modelo.setTooltip(idx[0], col, idx[2])
 
     def _ChangeColor(self, index):
         for idx in index:
-            self.delegate.setCellColor(idx[0], idx[1], idx[2])
+            col_name = idx[1]
+            col = self.headers.index(col_name) #pega o index da coluna pelo nome
+            self.delegate.setCellColor(idx[0], col, idx[2])
 
 
     # EXPORT to XLSX

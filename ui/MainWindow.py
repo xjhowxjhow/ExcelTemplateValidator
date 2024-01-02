@@ -19,7 +19,7 @@ class Ui_mainWindow(object):
         if not mainWindow.objectName():
             mainWindow.setObjectName(u"mainWindow")
         mainWindow.setWindowModality(Qt.NonModal)
-        mainWindow.resize(999, 559)
+        mainWindow.resize(1003, 568)
         mainWindow.setMaximumSize(QSize(16777215, 16777215))
         font = QFont()
         font.setFamily(u"Bahnschrift Light")
@@ -27,7 +27,503 @@ class Ui_mainWindow(object):
         icon1 = QIcon()
         icon1.addFile(u":/iconexe/ico.ico", QSize(), QIcon.Normal, QIcon.Off)
         mainWindow.setWindowIcon(icon1)
-        mainWindow.setStyleSheet(u"")
+        mainWindow.setStyleSheet(u"/*\n"
+"Ubuntu Style Sheet for QT Applications\n"
+"Author: Jaime A. Quiroga P.\n"
+"Company: GTRONICK\n"
+"Last updated: 01/10/2021 (dd/mm/yyyy), 15:18.\n"
+"Available at: https://github.com/GTRONICK/QSS/blob/master/Ubuntu.qss\n"
+"*/\n"
+"QMainWindow {\n"
+"	background-color:#f0f0f0;\n"
+"}\n"
+"QCheckBox {\n"
+"	padding:2px;\n"
+"}\n"
+"QCheckBox:hover {\n"
+"	border:1px solid rgb(255,150,60);\n"
+"	border-radius:4px;\n"
+"	padding: 1px;\n"
+"	background-color:qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgba(190, 90, 50, 50), stop:1 rgba(250, 130, 40, 50));\n"
+"}\n"
+"QCheckBox::indicator:checked {\n"
+"	border:1px solid rgb(246, 134, 86);\n"
+"	border-radius:4px;\n"
+"  	background-color:rgb(246, 134, 86)\n"
+"}\n"
+"QCheckBox::indicator:unchecked {\n"
+"	border-width:1px solid rgb(246, 134, 86);\n"
+"	border-radius:4px;\n"
+"  	background-color:rgb(255,255,255);\n"
+"}\n"
+"QColorDialog {\n"
+"	background-color:#f0f0f0;\n"
+"}\n"
+"QDateTimeEdit, QDateEdit, QDoubleSpinBox, QFontComboBox {\n"
+"	color:rgb(81,72,65);\n"
+""
+                        "	background-color: #ffffff;\n"
+"}\n"
+"\n"
+"QDialog {\n"
+"	background-color:#f0f0f0;\n"
+"}\n"
+"\n"
+"QLabel,QLineEdit {\n"
+"	color:rgb(17,17,17);\n"
+"}\n"
+"QLineEdit {\n"
+"	background-color:rgb(255,255,255);\n"
+"	selection-background-color:rgb(236,116,64);\n"
+"}\n"
+"QMenuBar {\n"
+"	color:rgb(223,219,210);\n"
+"	background-color:rgb(65,64,59);\n"
+"}\n"
+"QMenuBar::item {\n"
+"	padding-top:4px;\n"
+"	padding-left:4px;\n"
+"	padding-right:4px;\n"
+"	color:rgb(223,219,210);\n"
+"	background-color:rgb(65,64,59);\n"
+"}\n"
+"QMenuBar::item:selected {\n"
+"	color:rgb(255,255,255);\n"
+"	padding-top:2px;\n"
+"	padding-left:2px;\n"
+"	padding-right:2px;\n"
+"	border-top-width:2px;\n"
+"	border-left-width:2px;\n"
+"	border-right-width:2px;\n"
+"	border-top-right-radius:4px;\n"
+"	border-top-left-radius:4px;\n"
+"	border-style:solid;\n"
+"	background-color:rgb(65,64,59);\n"
+"	border-top-color: rgb(47,47,44);\n"
+"	border-right-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(90, 87, 78, 255), stop:1 rgba(47,47,44, 255));\n"
+""
+                        "	border-left-color:  qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 rgba(90, 87, 78, 255), stop:1 rgba(47,47,44, 255));\n"
+"}\n"
+"QMenu {\n"
+"	color:rgb(223,219,210);\n"
+"	background-color:rgb(65,64,59);\n"
+"}\n"
+"QMenu::item {\n"
+"	color:rgb(223,219,210);\n"
+"	padding:4px 10px 4px 20px;\n"
+"}\n"
+"QMenu::item:selected {\n"
+"	color:rgb(255,255,255);\n"
+"	background-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgba(225, 108, 54, 255), stop:1 rgba(246, 134, 86, 255));\n"
+"	border-style:solid;\n"
+"	border-width:3px;\n"
+"	padding:4px 7px 4px 17px;\n"
+"	border-bottom-color:qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgba(175,85,48,255), stop:1 rgba(236,114,67, 255));\n"
+"	border-top-color:qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgba(253,156,113,255), stop:1 rgba(205,90,46, 255));\n"
+"	border-right-color:qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgba(253,156,113,255), stop:1 rgba(205,90,46, 255));\n"
+"	border-left-colo"
+                        "r:qlineargradient(spread:pad, x1:1, y1:0.5, x2:0, y2:0.5, stop:0 rgba(253,156,113,255), stop:1 rgba(205,90,46, 255));\n"
+"}\n"
+"QPlainTextEdit {\n"
+"	border: 1px solid transparent;\n"
+"	color:rgb(17,17,17);\n"
+"	selection-background-color:rgb(236,116,64);\n"
+"    background-color: #FFFFFF;\n"
+"}\n"
+"QProgressBar {\n"
+"	text-align: center;\n"
+"	color: rgb(0, 0, 0);\n"
+"	border: 1px inset rgb(150,150,150); \n"
+"	border-radius: 10px;\n"
+"	background-color:rgb(221,221,219);\n"
+"}\n"
+"QProgressBar::chunk:horizontal {\n"
+"	background-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgba(225, 108, 54, 255), stop:1 rgba(246, 134, 86, 255));\n"
+"	border:1px solid;\n"
+"	border-radius:8px;\n"
+"	border-bottom-color:qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgba(175,85,48,255), stop:1 rgba(236,114,67, 255));\n"
+"	border-top-color:qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgba(253,156,113,255), stop:1 rgba(205,90,46, 255));\n"
+"	border-right-color:qlineargradien"
+                        "t(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgba(253,156,113,255), stop:1 rgba(205,90,46, 255));\n"
+"	border-left-color:qlineargradient(spread:pad, x1:1, y1:0.5, x2:0, y2:0.5, stop:0 rgba(253,156,113,255), stop:1 rgba(205,90,46, 255));\n"
+"}\n"
+"QPushButton{\n"
+"\n"
+"	color:rgb(17,17,17);\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-bottom-color: rgb(150,150,150);\n"
+"	border-right-color: rgb(165,165,165);\n"
+"	border-left-color: rgb(165,165,165);\n"
+"	border-top-color: rgb(180,180,180);\n"
+"	border-style: solid;\n"
+"	padding: 4px;\n"
+"	background-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgba(220, 220, 220, 255), stop:1 rgba(255, 255, 255, 255));\n"
+"}\n"
+"QPushButton:hover{\n"
+"	color:rgb(17,17,17);\n"
+"	border-width: 1px;\n"
+"	border-radius:6px;\n"
+"	border-top-color: rgb(255,150,60);\n"
+"	border-right-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(200, 70, 20, 255), stop:1 rgba(255,150,60, 255));\n"
+"	border-left-color:  qlineargradie"
+                        "nt(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 rgba(200, 70, 20, 255), stop:1 rgba(255,150,60, 255));\n"
+"	border-bottom-color: rgb(200,70,20);\n"
+"	border-style: solid;\n"
+"	padding: 2px;\n"
+"	background-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgba(220, 220, 220, 255), stop:1 rgba(255, 255, 255, 255));\n"
+"}\n"
+"QPushButton:default{\n"
+"	color:rgb(17,17,17);\n"
+"	border-width: 1px;\n"
+"	border-radius:6px;\n"
+"	border-top-color: rgb(255,150,60);\n"
+"	border-right-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(200, 70, 20, 255), stop:1 rgba(255,150,60, 255));\n"
+"	border-left-color:  qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 rgba(200, 70, 20, 255), stop:1 rgba(255,150,60, 255));\n"
+"	border-bottom-color: rgb(200,70,20);\n"
+"	border-style: solid;\n"
+"	padding: 2px;\n"
+"	background-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgba(220, 220, 220, 255), stop:1 rgba(255, 255, 255, 255));\n"
+"}\n"
+"QPushButton:pressed{\n"
+""
+                        "	color:rgb(17,17,17);\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-width: 1px;\n"
+"	border-top-color: rgba(255,150,60,200);\n"
+"	border-right-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(200, 70, 20, 255), stop:1 rgba(255,150,60, 200));\n"
+"	border-left-color:  qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 rgba(200, 70, 20, 255), stop:1 rgba(255,150,60, 200));\n"
+"	border-bottom-color: rgba(200,70,20,200);\n"
+"	border-style: solid;\n"
+"	padding: 2px;\n"
+"	background-color: qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(220, 220, 220, 255), stop:1 rgba(255, 255, 255, 255));\n"
+"}\n"
+"QPushButton:disabled{\n"
+"	color:rgb(174,167,159);\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	background-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgba(200, 200, 200, 255), stop:1 rgba(230, 230, 230, 255));\n"
+"}\n"
+"QRadioButton {\n"
+"	padding: 1px;\n"
+"}\n"
+"QRadioButton::indicator:checked {\n"
+"	height: 10px;\n"
+"	w"
+                        "idth: 10px;\n"
+"	border-style:solid;\n"
+"	border-radius:5px;\n"
+"	border-width: 1px;\n"
+"	border-color: rgba(246, 134, 86, 255);\n"
+"	color: #a9b7c6;\n"
+"	background-color:rgba(246, 134, 86, 255);\n"
+"}\n"
+"QRadioButton::indicator:!checked {\n"
+"	height: 10px;\n"
+"	width: 10px;\n"
+"	border-style:solid;\n"
+"	border-radius:5px;\n"
+"	border-width: 1px;\n"
+"	border-color: rgb(246, 134, 86);\n"
+"	color: #a9b7c6;\n"
+"	background-color: transparent;\n"
+"}\n"
+"QScrollArea {\n"
+"	color: white;\n"
+"	background-color:#f0f0f0;\n"
+"}\n"
+"QSlider::groove {\n"
+"	border-style: solid;\n"
+"	border-width: 1px;\n"
+"	border-color: rgb(207,207,207);\n"
+"}\n"
+"QSlider::groove:horizontal {\n"
+"	height: 5px;\n"
+"	background: rgb(246, 134, 86);\n"
+"}\n"
+"QSlider::groove:vertical {\n"
+"	width: 5px;\n"
+"	background: rgb(246, 134, 86);\n"
+"}\n"
+"QSlider::handle:horizontal {\n"
+"	background: rgb(253,253,253);\n"
+"	border-style: solid;\n"
+"	border-width: 1px;\n"
+"	border-color: rgb(207,207,207);\n"
+"	width: 12px;\n"
+"	margin: -5px 0;\n"
+"	b"
+                        "order-radius: 7px;\n"
+"}\n"
+"QSlider::handle:vertical {\n"
+"	background: rgb(253,253,253);\n"
+"	border-style: solid;\n"
+"	border-width: 1px;\n"
+"	border-color: rgb(207,207,207);\n"
+"	height: 12px;\n"
+"	margin: 0 -5px;\n"
+"	border-radius: 7px;\n"
+"}\n"
+"QSlider::add-page:horizontal, QSlider::add-page:vertical {\n"
+" 	background: white;\n"
+"}\n"
+"QSlider::sub-page:horizontal, QSlider::sub-page:vertical {\n"
+"	background: rgb(246, 134, 86);\n"
+"}\n"
+"QStatusBar, QSpinBox {\n"
+"	color:rgb(81,72,65);\n"
+"}\n"
+"QSpinBox {\n"
+"	background-color: #ffffff;\n"
+"}\n"
+"QScrollBar:horizontal {\n"
+"	max-height: 20px;\n"
+"	border: 1px transparent;\n"
+"	margin: 0px 20px 0px 20px;\n"
+"}\n"
+"QScrollBar::handle:horizontal {\n"
+"	background: rgb(253,253,253);\n"
+"	border: 1px solid rgb(207,207,207);\n"
+"	border-radius: 7px;\n"
+"	min-width: 25px;\n"
+"}\n"
+"QScrollBar::handle:horizontal:hover {\n"
+"	background: rgb(253,253,253);\n"
+"	border: 1px solid rgb(255,150,60);\n"
+"	border-radius: 7px;\n"
+"	min-width: 25px;\n"
+"}\n"
+"QScroll"
+                        "Bar::add-line:horizontal {\n"
+"  	border: 1px solid rgb(207,207,207);\n"
+"  	border-top-right-radius: 7px;\n"
+"  	border-top-left-radius: 7px;\n"
+"  	border-bottom-right-radius: 7px;\n"
+"  	background: rgb(255, 255, 255);\n"
+"  	width: 20px;\n"
+"  	subcontrol-position: right;\n"
+"  	subcontrol-origin: margin;\n"
+"}\n"
+"QScrollBar::add-line:horizontal:hover {\n"
+"  	border: 1px solid rgb(255,150,60);\n"
+"  	border-top-right-radius: 7px;\n"
+"  	border-top-left-radius: 7px;\n"
+"  	border-bottom-right-radius: 7px;\n"
+"  	background: rgb(255, 255, 255);\n"
+"  	width: 20px;\n"
+"  	subcontrol-position: right;\n"
+"  	subcontrol-origin: margin;\n"
+"}\n"
+"QScrollBar::add-line:horizontal:pressed {\n"
+"  	border: 1px solid grey;\n"
+"  	border-top-left-radius: 7px;\n"
+"  	border-top-right-radius: 7px;\n"
+"  	border-bottom-right-radius: 7px;\n"
+"  	background: rgb(231,231,231);\n"
+"  	width: 20px;\n"
+"  	subcontrol-position: right;\n"
+"  	subcontrol-origin: margin;\n"
+"}\n"
+"QScrollBar::sub-line:horizontal {\n"
+"  	border: "
+                        "1px solid rgb(207,207,207);\n"
+"  	border-top-right-radius: 7px;\n"
+"  	border-top-left-radius: 7px;\n"
+"  	border-bottom-left-radius: 7px;\n"
+"  	background: rgb(255, 255, 255);\n"
+"  	width: 20px;\n"
+"  	subcontrol-position: left;\n"
+"  	subcontrol-origin: margin;\n"
+"}\n"
+"QScrollBar::sub-line:horizontal:hover {\n"
+"  	border: 1px solid rgb(255,150,60);\n"
+"  	border-top-right-radius: 7px;\n"
+"  	border-top-left-radius: 7px;\n"
+"  	border-bottom-left-radius: 7px;\n"
+"  	background: rgb(255, 255, 255);\n"
+"  	width: 20px;\n"
+"  	subcontrol-position: left;\n"
+"  	subcontrol-origin: margin;\n"
+"}\n"
+"QScrollBar::sub-line:horizontal:pressed {\n"
+"  	border: 1px solid grey;\n"
+"  	border-top-right-radius: 7px;\n"
+"  	border-top-left-radius: 7px;\n"
+"  	border-bottom-left-radius: 7px;\n"
+"  	background: rgb(231,231,231);\n"
+"  	width: 20px;\n"
+"  	subcontrol-position: left;\n"
+"  	subcontrol-origin: margin;\n"
+"}\n"
+"QScrollBar::left-arrow:horizontal {\n"
+"  	border: 1px transparent grey;\n"
+"  	border-top-left-r"
+                        "adius: 3px;\n"
+"  	border-bottom-left-radius: 3px;\n"
+"  	width: 6px;\n"
+"  	height: 6px;\n"
+"  	background: rgb(230,230,230);\n"
+"}\n"
+"QScrollBar::right-arrow:horizontal {\n"
+"	border: 1px transparent grey;\n"
+"	border-top-right-radius: 3px;\n"
+"	border-bottom-right-radius: 3px;\n"
+"  	width: 6px;\n"
+"  	height: 6px;\n"
+" 	background: rgb(230,230,230);\n"
+"}\n"
+"QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {\n"
+" 	background: none;\n"
+"} \n"
+"QScrollBar:vertical {\n"
+"	max-width: 20px;\n"
+"	border: 1px transparent grey;\n"
+"	margin: 20px 0px 20px 0px;\n"
+"}\n"
+"QScrollBar::add-line:vertical {\n"
+"	border: 1px solid;\n"
+"	border-color: rgb(207,207,207);\n"
+"	border-bottom-right-radius: 7px;\n"
+"	border-bottom-left-radius: 7px;\n"
+"	border-top-left-radius: 7px;\n"
+"	background: rgb(255, 255, 255);\n"
+"  	height: 20px;\n"
+"  	subcontrol-position: bottom;\n"
+"  	subcontrol-origin: margin;\n"
+"}\n"
+"QScrollBar::add-line:vertical:hover {\n"
+"  	border: 1px solid;\n"
+"  	border-color: rgb(255,15"
+                        "0,60);\n"
+"  	border-bottom-right-radius: 7px;\n"
+"  	border-bottom-left-radius: 7px;\n"
+"  	border-top-left-radius: 7px;\n"
+"  	background: rgb(255, 255, 255);\n"
+"  	height: 20px;\n"
+"  	subcontrol-position: bottom;\n"
+"  	subcontrol-origin: margin;\n"
+"}\n"
+"QScrollBar::add-line:vertical:pressed {\n"
+"  	border: 1px solid grey;\n"
+"  	border-bottom-left-radius: 7px;\n"
+"  	border-bottom-right-radius: 7px;\n"
+"  	border-top-left-radius: 7px;\n"
+"  	background: rgb(231,231,231);\n"
+"  	height: 20px;\n"
+"  	subcontrol-position: bottom;\n"
+"  	subcontrol-origin: margin;\n"
+"}\n"
+"QScrollBar::sub-line:vertical {\n"
+"  	border: 1px solid rgb(207,207,207);\n"
+"  	border-top-right-radius: 7px;\n"
+"  	border-top-left-radius: 7px;\n"
+"  	border-bottom-left-radius: 7px;\n"
+"  	background: rgb(255, 255, 255);\n"
+"  	height: 20px;\n"
+"  	subcontrol-position: top;\n"
+"  	subcontrol-origin: margin;\n"
+"}\n"
+"QScrollBar::sub-line:vertical:hover {\n"
+"  	border: 1px solid rgb(255,150,60);\n"
+"  	border-top-right-radius: 7px"
+                        ";\n"
+"  	border-top-left-radius: 7px;\n"
+"  	border-bottom-left-radius: 7px;\n"
+"	background: rgb(255, 255, 255);\n"
+"  	height: 20px;\n"
+"  	subcontrol-position: top;\n"
+"  	subcontrol-origin: margin;\n"
+"}\n"
+"QScrollBar::sub-line:vertical:pressed {\n"
+"  	border: 1px solid grey;\n"
+"  	border-top-left-radius: 7px;\n"
+"  	border-top-right-radius: 7px;\n"
+"  	background: rgb(231,231,231);\n"
+" 	height: 20px;\n"
+"  	subcontrol-position: top;\n"
+"  	subcontrol-origin: margin;\n"
+"}\n"
+"QScrollBar::handle:vertical {\n"
+"	background: rgb(253,253,253);\n"
+"	border: 1px solid rgb(207,207,207);\n"
+"	border-radius: 7px;\n"
+"	min-height: 25px;\n"
+"}\n"
+"QScrollBar::handle:vertical:hover {\n"
+"	background: rgb(253,253,253);\n"
+"	border: 1px solid rgb(255,150,60);\n"
+"	border-radius: 7px;\n"
+"	min-height: 25px;\n"
+"}\n"
+"QScrollBar::up-arrow:vertical {\n"
+"	border: 1px transparent grey;\n"
+"  	border-top-left-radius: 3px;\n"
+"	border-top-right-radius: 3px;\n"
+"  	width: 6px;\n"
+"  	height: 6px;\n"
+"  	background: rgb(23"
+                        "0,230,230);\n"
+"}\n"
+"QScrollBar::down-arrow:vertical {\n"
+"  	border: 1px transparent grey;\n"
+"  	border-bottom-left-radius: 3px;\n"
+"  	border-bottom-right-radius: 3px;\n"
+"  	width: 6px;\n"
+"  	height: 6px;\n"
+"  	background: rgb(230,230,230);\n"
+"}\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"  	background: none;\n"
+"}\n"
+"QTabWidget {\n"
+"	color:rgb(0,0,0);\n"
+"	background-color:rgb(247,246,246);\n"
+"}\n"
+"QTabWidget::pane {\n"
+"	border-color: rgb(180,180,180);\n"
+"	background-color:rgb(247,246,246);\n"
+"	border-style: solid;\n"
+"	border-width: 1px;\n"
+"  	border-radius: 6px;\n"
+"}\n"
+"QTabBar::tab {\n"
+"	padding-left:6px;\n"
+"	padding-right:6px;\n"
+"	padding-bottom:6px;\n"
+"	padding-top:6px;\n"
+"	color:rgb(81,72,65);\n"
+"  	background-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgba(221,218,217,255), stop:1 rgba(240,239,238,255));\n"
+"	border-style: solid;\n"
+"	border-width: 1px;\n"
+"  	border-top-right-radius:4px;\n"
+"	border-top-left-radius:4px;\n"
+""
+                        "	border-top-color: rgb(180,180,180);\n"
+"	border-left-color: rgb(180,180,180);\n"
+"	border-right-color: rgb(180,180,180);\n"
+"	border-bottom-color: transparent;\n"
+"}\n"
+"QTabBar::tab:selected, QTabBar::tab:last:selected, QTabBar::tab:hover {\n"
+"  	background-color:rgb(247,246,246);\n"
+"  	margin-left: 0px;\n"
+"  	margin-right: 1px;\n"
+"}\n"
+"QTabBar::tab:!selected {\n"
+"	margin-top: 1px;\n"
+"	margin-right: 1px;\n"
+"}\n"
+"QTextEdit {\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"	border-color:transparent;\n"
+"	color:rgb(17,17,17);\n"
+"	selection-background-color:rgb(236,116,64);\n"
+"}\n"
+"QTimeEdit, QToolBox, QToolBox::tab, QToolBox::tab:selected {\n"
+"	color:rgb(81,72,65);\n"
+"	background-color: #ffffff;\n"
+"}")
         mainWindow.setDocumentMode(False)
         mainWindow.setTabShape(QTabWidget.Rounded)
         mainWindow.setDockNestingEnabled(False)
@@ -36,8 +532,6 @@ class Ui_mainWindow(object):
         self.actionasda.setObjectName(u"actionasda")
         self.actionasd = QAction(mainWindow)
         self.actionasd.setObjectName(u"actionasd")
-        self.actiondesenvolvedor = QAction(mainWindow)
-        self.actiondesenvolvedor.setObjectName(u"actiondesenvolvedor")
         self.centralwidget = QWidget(mainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         font1 = QFont()
@@ -66,7 +560,7 @@ class Ui_mainWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 999, 559))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 1003, 568))
         self.horizontalLayout_7 = QHBoxLayout(self.scrollAreaWidgetContents)
         self.horizontalLayout_7.setSpacing(0)
         self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
@@ -82,7 +576,7 @@ class Ui_mainWindow(object):
         self.verticalLayout_8.setObjectName(u"verticalLayout_8")
         self.btn_page_home = QPushButton(self.togleframe)
         self.btn_page_home.setObjectName(u"btn_page_home")
-        self.btn_page_home.setMinimumSize(QSize(40, 40))
+        self.btn_page_home.setMinimumSize(QSize(0, 40))
         self.btn_page_home.setStyleSheet(u"")
         icon2 = QIcon()
         icon2.addFile(u":/newicons/newicons/home.png", QSize(), QIcon.Normal, QIcon.Off)
@@ -96,7 +590,7 @@ class Ui_mainWindow(object):
 
         self.btn_page_clients = QPushButton(self.togleframe)
         self.btn_page_clients.setObjectName(u"btn_page_clients")
-        self.btn_page_clients.setMinimumSize(QSize(40, 40))
+        self.btn_page_clients.setMinimumSize(QSize(0, 40))
         self.btn_page_clients.setStyleSheet(u"")
         icon3 = QIcon()
         icon3.addFile(u":/newicons/newicons/cube-validate.png", QSize(), QIcon.Normal, QIcon.Off)
@@ -106,7 +600,7 @@ class Ui_mainWindow(object):
 
         self.btn_page_config = QPushButton(self.togleframe)
         self.btn_page_config.setObjectName(u"btn_page_config")
-        self.btn_page_config.setMinimumSize(QSize(40, 40))
+        self.btn_page_config.setMinimumSize(QSize(0, 40))
         self.btn_page_config.setStyleSheet(u"")
         icon4 = QIcon()
         icon4.addFile(u":/newicons/newicons/config.png", QSize(), QIcon.Normal, QIcon.Off)
@@ -121,7 +615,7 @@ class Ui_mainWindow(object):
 
         self.btn_exit_program = QPushButton(self.togleframe)
         self.btn_exit_program.setObjectName(u"btn_exit_program")
-        self.btn_exit_program.setMinimumSize(QSize(40, 40))
+        self.btn_exit_program.setMinimumSize(QSize(0, 40))
         self.btn_exit_program.setStyleSheet(u"")
         icon5 = QIcon()
         icon5.addFile(u":/newicons/newicons/exit.png", QSize(), QIcon.Normal, QIcon.Off)
@@ -150,14 +644,13 @@ class Ui_mainWindow(object):
         self.pagecontents.setFrameShape(QFrame.StyledPanel)
         self.pagecontents.setFrameShadow(QFrame.Raised)
         self.verticalLayout_2 = QVBoxLayout(self.pagecontents)
-        self.verticalLayout_2.setSpacing(0)
+        self.verticalLayout_2.setSpacing(10)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.verticalLayout_2.setContentsMargins(0, -1, -1, -1)
         self.frame_14 = QFrame(self.pagecontents)
         self.frame_14.setObjectName(u"frame_14")
         self.frame_14.setMinimumSize(QSize(0, 50))
         self.frame_14.setMaximumSize(QSize(16777215, 50))
-        self.frame_14.setLayoutDirection(Qt.LeftToRight)
         self.frame_14.setStyleSheet(u"")
         self.frame_14.setFrameShape(QFrame.StyledPanel)
         self.frame_14.setFrameShadow(QFrame.Raised)
@@ -186,16 +679,6 @@ class Ui_mainWindow(object):
 
         self.horizontalLayout_12.addItem(self.horizontalSpacer_7)
 
-        self.frame_19 = QFrame(self.frame_14)
-        self.frame_19.setObjectName(u"frame_19")
-        self.frame_19.setMinimumSize(QSize(50, 34))
-        self.frame_19.setMaximumSize(QSize(16777215, 16777215))
-        self.frame_19.setStyleSheet(u"border-image: url(:/iconexe/ico.ico)")
-        self.frame_19.setFrameShape(QFrame.StyledPanel)
-        self.frame_19.setFrameShadow(QFrame.Raised)
-
-        self.horizontalLayout_12.addWidget(self.frame_19)
-
 
         self.verticalLayout_2.addWidget(self.frame_14)
 
@@ -204,6 +687,7 @@ class Ui_mainWindow(object):
         self.tables.setMaximumSize(QSize(16777215, 100))
         self.tables.setStyleSheet(u"")
         self.tables.setFlat(True)
+        self.tables.setCheckable(False)
         self.verticalLayout_4 = QVBoxLayout(self.tables)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
         self.verticalLayout_4.setContentsMargins(0, -1, 0, -1)
@@ -386,12 +870,11 @@ class Ui_mainWindow(object):
 
         self.verticalLayout_2.addWidget(self.logvierw)
 
-        self.bottomconfig = QGroupBox(self.pagecontents)
+        self.bottomconfig = QFrame(self.pagecontents)
         self.bottomconfig.setObjectName(u"bottomconfig")
         self.bottomconfig.setMaximumSize(QSize(16777215, 50))
         self.bottomconfig.setMouseTracking(False)
         self.bottomconfig.setStyleSheet(u"")
-        self.bottomconfig.setFlat(True)
         self.horizontalLayout_5 = QHBoxLayout(self.bottomconfig)
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
         self.label_2 = QLabel(self.bottomconfig)
@@ -440,6 +923,7 @@ class Ui_mainWindow(object):
 
         self.start = QPushButton(self.bottomconfig)
         self.start.setObjectName(u"start")
+        self.start.setMinimumSize(QSize(0, 30))
         self.start.setMaximumSize(QSize(100, 16777215))
         self.start.setStyleSheet(u"")
         icon6 = QIcon()
@@ -451,6 +935,7 @@ class Ui_mainWindow(object):
 
         self.start_validation = QPushButton(self.bottomconfig)
         self.start_validation.setObjectName(u"start_validation")
+        self.start_validation.setMinimumSize(QSize(0, 30))
         self.start_validation.setMaximumSize(QSize(100, 16777215))
         self.start_validation.setStyleSheet(u"")
         icon7 = QIcon()
@@ -462,6 +947,7 @@ class Ui_mainWindow(object):
 
         self.export_xlsx = QPushButton(self.bottomconfig)
         self.export_xlsx.setObjectName(u"export_xlsx")
+        self.export_xlsx.setMinimumSize(QSize(0, 30))
         self.export_xlsx.setStyleSheet(u"")
         icon8 = QIcon()
         icon8.addFile(u":/newicons/newicons/excel.png", QSize(), QIcon.Normal, QIcon.Off)
@@ -472,6 +958,7 @@ class Ui_mainWindow(object):
 
         self.jsontoxls = QPushButton(self.bottomconfig)
         self.jsontoxls.setObjectName(u"jsontoxls")
+        self.jsontoxls.setMinimumSize(QSize(0, 30))
         icon9 = QIcon()
         icon9.addFile(u":/newicons/newicons/excelimport.png", QSize(), QIcon.Normal, QIcon.Off)
         self.jsontoxls.setIcon(icon9)
@@ -565,7 +1052,7 @@ class Ui_mainWindow(object):
 
         self.btn_procurar = QPushButton(self.group_frame_seachr)
         self.btn_procurar.setObjectName(u"btn_procurar")
-        self.btn_procurar.setMinimumSize(QSize(50, 30))
+        self.btn_procurar.setMinimumSize(QSize(0, 30))
         self.btn_procurar.setMaximumSize(QSize(16777215, 16777215))
         self.btn_procurar.setFont(font3)
         self.btn_procurar.setStyleSheet(u"")
@@ -596,7 +1083,7 @@ class Ui_mainWindow(object):
         self.horizontalLayout_14.setContentsMargins(0, 0, 0, 0)
         self.btn_pg_add_new_template = QPushButton(self.group_buttons)
         self.btn_pg_add_new_template.setObjectName(u"btn_pg_add_new_template")
-        self.btn_pg_add_new_template.setMinimumSize(QSize(150, 30))
+        self.btn_pg_add_new_template.setMinimumSize(QSize(0, 30))
         self.btn_pg_add_new_template.setMaximumSize(QSize(150, 16777215))
         self.btn_pg_add_new_template.setStyleSheet(u"")
         icon11 = QIcon()
@@ -733,6 +1220,7 @@ class Ui_mainWindow(object):
         self.label_7 = QLabel(self.frame_24)
         self.label_7.setObjectName(u"label_7")
         self.label_7.setStyleSheet(u"")
+        self.label_7.setWordWrap(False)
 
         self.formLayout_3.setWidget(0, QFormLayout.LabelRole, self.label_7)
 
@@ -820,7 +1308,7 @@ class Ui_mainWindow(object):
 
         self.new_fild_template = QPushButton(self.groupBox_2)
         self.new_fild_template.setObjectName(u"new_fild_template")
-        self.new_fild_template.setMinimumSize(QSize(110, 30))
+        self.new_fild_template.setMinimumSize(QSize(0, 30))
         self.new_fild_template.setMaximumSize(QSize(16777215, 16777215))
         self.new_fild_template.setStyleSheet(u"")
         icon12 = QIcon()
@@ -832,7 +1320,7 @@ class Ui_mainWindow(object):
 
         self.delete_fild_template = QPushButton(self.groupBox_2)
         self.delete_fild_template.setObjectName(u"delete_fild_template")
-        self.delete_fild_template.setMinimumSize(QSize(150, 30))
+        self.delete_fild_template.setMinimumSize(QSize(0, 30))
         self.delete_fild_template.setMaximumSize(QSize(16777215, 16777215))
         self.delete_fild_template.setFocusPolicy(Qt.NoFocus)
         self.delete_fild_template.setLayoutDirection(Qt.LeftToRight)
@@ -846,7 +1334,7 @@ class Ui_mainWindow(object):
 
         self.btn_gerar_template = QPushButton(self.groupBox_2)
         self.btn_gerar_template.setObjectName(u"btn_gerar_template")
-        self.btn_gerar_template.setMinimumSize(QSize(110, 30))
+        self.btn_gerar_template.setMinimumSize(QSize(0, 30))
         self.btn_gerar_template.setMaximumSize(QSize(16777215, 16777215))
         self.btn_gerar_template.setStyleSheet(u"")
         icon14 = QIcon()
@@ -888,7 +1376,7 @@ class Ui_mainWindow(object):
         self.scrollArea_4.setWidgetResizable(True)
         self.scrollAreaWidgetContents_4 = QWidget()
         self.scrollAreaWidgetContents_4.setObjectName(u"scrollAreaWidgetContents_4")
-        self.scrollAreaWidgetContents_4.setGeometry(QRect(0, 0, 292, 54))
+        self.scrollAreaWidgetContents_4.setGeometry(QRect(0, 0, 259, 52))
         self.verticalLayout_24 = QVBoxLayout(self.scrollAreaWidgetContents_4)
         self.verticalLayout_24.setSpacing(0)
         self.verticalLayout_24.setObjectName(u"verticalLayout_24")
@@ -912,7 +1400,7 @@ class Ui_mainWindow(object):
 
         self.btn_cria_xls_template = QPushButton(self.groupBox_4)
         self.btn_cria_xls_template.setObjectName(u"btn_cria_xls_template")
-        self.btn_cria_xls_template.setMinimumSize(QSize(110, 30))
+        self.btn_cria_xls_template.setMinimumSize(QSize(0, 30))
         self.btn_cria_xls_template.setMaximumSize(QSize(16777215, 16777215))
         self.btn_cria_xls_template.setFont(font1)
         self.btn_cria_xls_template.setStyleSheet(u"")
@@ -923,7 +1411,7 @@ class Ui_mainWindow(object):
 
         self.btn_deleta_template = QPushButton(self.groupBox_4)
         self.btn_deleta_template.setObjectName(u"btn_deleta_template")
-        self.btn_deleta_template.setMinimumSize(QSize(150, 30))
+        self.btn_deleta_template.setMinimumSize(QSize(0, 30))
         self.btn_deleta_template.setMaximumSize(QSize(16777215, 16777215))
         self.btn_deleta_template.setFont(font1)
         self.btn_deleta_template.setFocusPolicy(Qt.NoFocus)
@@ -962,7 +1450,7 @@ class Ui_mainWindow(object):
         self.scrollArea_2.setWidgetResizable(True)
         self.scrollAreaWidgetContents_2 = QWidget()
         self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
-        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 920, 554))
+        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 924, 629))
         self.verticalLayout_15 = QVBoxLayout(self.scrollAreaWidgetContents_2)
         self.verticalLayout_15.setObjectName(u"verticalLayout_15")
         self.verticalLayout_15.setContentsMargins(0, -1, -1, -1)
@@ -987,15 +1475,6 @@ class Ui_mainWindow(object):
         self.horizontalSpacer = QSpacerItem(764, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         self.horizontalLayout.addItem(self.horizontalSpacer)
-
-        self.frame_13 = QFrame(self.header_logo_config)
-        self.frame_13.setObjectName(u"frame_13")
-        self.frame_13.setMinimumSize(QSize(233, 0))
-        self.frame_13.setStyleSheet(u"")
-        self.frame_13.setFrameShape(QFrame.StyledPanel)
-        self.frame_13.setFrameShadow(QFrame.Raised)
-
-        self.horizontalLayout.addWidget(self.frame_13)
 
 
         self.verticalLayout_15.addWidget(self.header_logo_config)
@@ -1043,21 +1522,14 @@ class Ui_mainWindow(object):
 
         self.verticalLayout_15.addWidget(self.groupBox)
 
-        self.groupBox_6 = QGroupBox(self.scrollAreaWidgetContents_2)
-        self.groupBox_6.setObjectName(u"groupBox_6")
-        self.groupBox_6.setMinimumSize(QSize(0, 0))
-        self.verticalLayout_25 = QVBoxLayout(self.groupBox_6)
+        self.main_group_box_export = QGroupBox(self.scrollAreaWidgetContents_2)
+        self.main_group_box_export.setObjectName(u"main_group_box_export")
+        self.main_group_box_export.setMinimumSize(QSize(0, 0))
+        self.verticalLayout_25 = QVBoxLayout(self.main_group_box_export)
         self.verticalLayout_25.setObjectName(u"verticalLayout_25")
         self.gridLayout_2 = QGridLayout()
         self.gridLayout_2.setObjectName(u"gridLayout_2")
-        self.label_6 = QLabel(self.groupBox_6)
-        self.label_6.setObjectName(u"label_6")
-        self.label_6.setMaximumSize(QSize(150, 16777215))
-        self.label_6.setWordWrap(True)
-
-        self.gridLayout_2.addWidget(self.label_6, 0, 0, 1, 1)
-
-        self.frame_3 = QFrame(self.groupBox_6)
+        self.frame_3 = QFrame(self.main_group_box_export)
         self.frame_3.setObjectName(u"frame_3")
         self.frame_3.setFrameShape(QFrame.StyledPanel)
         self.frame_3.setFrameShadow(QFrame.Raised)
@@ -1067,6 +1539,7 @@ class Ui_mainWindow(object):
         self.verticalLayout_26.setContentsMargins(0, 0, 0, 0)
         self.groupBox_7 = QGroupBox(self.frame_3)
         self.groupBox_7.setObjectName(u"groupBox_7")
+        self.groupBox_7.setEnabled(False)
         self.groupBox_7.setFlat(True)
         self.verticalLayout_27 = QVBoxLayout(self.groupBox_7)
         self.verticalLayout_27.setObjectName(u"verticalLayout_27")
@@ -1109,13 +1582,13 @@ class Ui_mainWindow(object):
 
         self.gridLayout_2.addWidget(self.frame_3, 0, 2, 1, 1)
 
-        self.label_17 = QLabel(self.groupBox_6)
+        self.label_17 = QLabel(self.main_group_box_export)
         self.label_17.setObjectName(u"label_17")
         self.label_17.setMinimumSize(QSize(0, 50))
 
         self.gridLayout_2.addWidget(self.label_17, 1, 0, 1, 1)
 
-        self.groupBox_8 = QGroupBox(self.groupBox_6)
+        self.groupBox_8 = QGroupBox(self.main_group_box_export)
         self.groupBox_8.setObjectName(u"groupBox_8")
         self.groupBox_8.setFlat(True)
         self.verticalLayout_28 = QVBoxLayout(self.groupBox_8)
@@ -1131,11 +1604,89 @@ class Ui_mainWindow(object):
 
         self.gridLayout_2.addWidget(self.groupBox_8, 1, 2, 1, 1)
 
+        self.label_6 = QLabel(self.main_group_box_export)
+        self.label_6.setObjectName(u"label_6")
+        self.label_6.setEnabled(False)
+        self.label_6.setMaximumSize(QSize(150, 16777215))
+        self.label_6.setWordWrap(True)
+
+        self.gridLayout_2.addWidget(self.label_6, 0, 0, 1, 1)
+
+        self.label_20 = QLabel(self.main_group_box_export)
+        self.label_20.setObjectName(u"label_20")
+        font5 = QFont()
+        font5.setFamily(u"Bahnschrift Light")
+        font5.setPointSize(9)
+        font5.setBold(False)
+        font5.setItalic(False)
+        font5.setUnderline(False)
+        font5.setWeight(50)
+        font5.setStrikeOut(False)
+        font5.setKerning(True)
+        font5.setStyleStrategy(QFont.PreferAntialias)
+        self.label_20.setFont(font5)
+
+        self.gridLayout_2.addWidget(self.label_20, 2, 0, 1, 1)
+
+        self.groupBox_9 = QGroupBox(self.main_group_box_export)
+        self.groupBox_9.setObjectName(u"groupBox_9")
+        self.groupBox_9.setFlat(True)
+        self.horizontalLayout_17 = QHBoxLayout(self.groupBox_9)
+        self.horizontalLayout_17.setObjectName(u"horizontalLayout_17")
+        self.default_layout_type_export = QComboBox(self.groupBox_9)
+        self.default_layout_type_export.addItem("")
+        self.default_layout_type_export.addItem("")
+        self.default_layout_type_export.setObjectName(u"default_layout_type_export")
+        self.default_layout_type_export.setMinimumSize(QSize(150, 0))
+        self.default_layout_type_export.setMaximumSize(QSize(150, 25))
+
+        self.horizontalLayout_17.addWidget(self.default_layout_type_export)
+
+        self.label_21 = QLabel(self.groupBox_9)
+        self.label_21.setObjectName(u"label_21")
+        font6 = QFont()
+        font6.setFamily(u"Bahnschrift Light")
+        font6.setPointSize(8)
+        font6.setBold(False)
+        font6.setItalic(False)
+        font6.setUnderline(False)
+        font6.setWeight(50)
+        font6.setStrikeOut(False)
+        font6.setKerning(True)
+        font6.setStyleStrategy(QFont.PreferAntialias)
+        self.label_21.setFont(font6)
+
+        self.horizontalLayout_17.addWidget(self.label_21)
+
+
+        self.gridLayout_2.addWidget(self.groupBox_9, 2, 2, 1, 1)
+
 
         self.verticalLayout_25.addLayout(self.gridLayout_2)
 
 
-        self.verticalLayout_15.addWidget(self.groupBox_6)
+        self.verticalLayout_15.addWidget(self.main_group_box_export)
+
+        self.importacao_config = QGroupBox(self.scrollAreaWidgetContents_2)
+        self.importacao_config.setObjectName(u"importacao_config")
+        self.importacao_config.setMinimumSize(QSize(0, 0))
+        self.formLayout_6 = QFormLayout(self.importacao_config)
+        self.formLayout_6.setObjectName(u"formLayout_6")
+        self.label_18 = QLabel(self.importacao_config)
+        self.label_18.setObjectName(u"label_18")
+        self.label_18.setMinimumSize(QSize(0, 0))
+        self.label_18.setMaximumSize(QSize(150, 16777215))
+
+        self.formLayout_6.setWidget(0, QFormLayout.LabelRole, self.label_18)
+
+        self.default_encondig = QComboBox(self.importacao_config)
+        self.default_encondig.setObjectName(u"default_encondig")
+        self.default_encondig.setMaximumSize(QSize(150, 16777215))
+
+        self.formLayout_6.setWidget(0, QFormLayout.FieldRole, self.default_encondig)
+
+
+        self.verticalLayout_15.addWidget(self.importacao_config)
 
         self.verticalSpacer_2 = QSpacerItem(20, 164, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
@@ -1195,10 +1746,9 @@ class Ui_mainWindow(object):
     # setupUi
 
     def retranslateUi(self, mainWindow):
-        mainWindow.setWindowTitle(QCoreApplication.translate("mainWindow", u"Template Validator V1.9-170923", None))
+        mainWindow.setWindowTitle(QCoreApplication.translate("mainWindow", u"Template Validator V1.9.3", None))
         self.actionasda.setText(QCoreApplication.translate("mainWindow", u"asda", None))
         self.actionasd.setText(QCoreApplication.translate("mainWindow", u"asd", None))
-        self.actiondesenvolvedor.setText(QCoreApplication.translate("mainWindow", u"desenvolvedor", None))
 #if QT_CONFIG(tooltip)
         self.btn_page_home.setToolTip(QCoreApplication.translate("mainWindow", u"Pagina Inicial", None))
 #endif // QT_CONFIG(tooltip)
@@ -1282,8 +1832,7 @@ class Ui_mainWindow(object):
         self.config_datatype_number_allowerd_p.setToolTip(QCoreApplication.translate("mainWindow", u"Exemplo : 1.1", None))
 #endif // QT_CONFIG(tooltip)
         self.config_datatype_number_allowerd_p.setText(QCoreApplication.translate("mainWindow", u"Ponto", None))
-        self.groupBox_6.setTitle(QCoreApplication.translate("mainWindow", u"Exporta\u00e7\u00e3o de Planilhas", None))
-        self.label_6.setText(QCoreApplication.translate("mainWindow", u"Gera excel colorido com marca\u00e7\u00e3o de erros:", None))
+        self.main_group_box_export.setTitle(QCoreApplication.translate("mainWindow", u"Exporta\u00e7\u00e3o de Planilhas", None))
         self.groupBox_7.setTitle(QCoreApplication.translate("mainWindow", u"Com planilhas de no maximo:", None))
         self.label_15.setText(QCoreApplication.translate("mainWindow", u"Linhas", None))
 #if QT_CONFIG(tooltip)
@@ -1300,6 +1849,18 @@ class Ui_mainWindow(object):
         self.default_export.setItemText(0, QCoreApplication.translate("mainWindow", u"xlsx", None))
         self.default_export.setItemText(1, QCoreApplication.translate("mainWindow", u"csv", None))
 
+        self.label_6.setText(QCoreApplication.translate("mainWindow", u"Gera excel colorido com marca\u00e7\u00e3o de erros:", None))
+        self.label_20.setText(QCoreApplication.translate("mainWindow", u"Tipo de Export Planilha De Erros", None))
+        self.groupBox_9.setTitle("")
+        self.default_layout_type_export.setItemText(0, QCoreApplication.translate("mainWindow", u"Minima", None))
+        self.default_layout_type_export.setItemText(1, QCoreApplication.translate("mainWindow", u"Completa", None))
+
+#if QT_CONFIG(tooltip)
+        self.default_layout_type_export.setToolTip(QCoreApplication.translate("mainWindow", u"Completa: Validos + Linhas de Erros |  Minima : Somente linhas com erros", None))
+#endif // QT_CONFIG(tooltip)
+        self.label_21.setText("")
+        self.importacao_config.setTitle(QCoreApplication.translate("mainWindow", u"Codificacao de Planilhas", None))
+        self.label_18.setText(QCoreApplication.translate("mainWindow", u"Encondig Type", None))
         self.save_config.setText(QCoreApplication.translate("mainWindow", u"Salvar", None))
         self.reset_config.setText(QCoreApplication.translate("mainWindow", u"Reset", None))
     # retranslateUi

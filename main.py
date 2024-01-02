@@ -97,7 +97,7 @@ class MainWindow (Ui_mainWindow, QMainWindow):
         self.btn_pg_add_new_template.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.page_new_template))
         self.btn_deleta_template.clicked.connect(self.DeleteTemplate)
         self.searchtemplates.textChanged.connect(self.SearchListTemplate)
-        self.ControlThread.finished_all_thread.connect(lambda:  self.StartValidationDuplites())
+        self.ControlThread.finished_all_thread.connect(lambda:  self.PainterRows())
 
         # BTNS SIGNALS FUNCTIONS
         # ///////////////////////////////////////////////////////////////
@@ -108,7 +108,7 @@ class MainWindow (Ui_mainWindow, QMainWindow):
         self.jsontoxls.clicked.connect(lambda: self.ExportToXls('ERROS'))
         self.btn_exit_program.clicked.connect(self.app.quit)
         self.save_config.clicked.connect(self.SaveConfig)
-        self.reset_config.clicked.connect(self.LoadConfig)
+        self.reset_config.clicked.connect(self.ResetConfig)
 
         # STARTER FUNCTIONS
         # ///////////////////////////////////////////////////////////////
@@ -135,6 +135,14 @@ class MainWindow (Ui_mainWindow, QMainWindow):
         else:
             self.config_datatype_number_allowerd_p.setChecked(False)
             self.config_datatype_number_allowerd_v.setChecked(False)
+        
+        list_encondig = self.app_config.get_encondingtipes()
+        self.default_encondig.addItems(list_encondig)
+        self.default_encondig.setCurrentText(self.app_config.get_default_encoding())
+
+        self.default_export.setCurrentText(self.app_config.get_default_export_format())
+
+        self.default_layout_type_export.setCurrentText(self.app_config.get_default_type_export_layout())
 
     def SaveConfig(self):
         if self.config_datatype_number_allowerd_v.isChecked() and self.config_datatype_number_allowerd_p.isChecked():
@@ -152,13 +160,20 @@ class MainWindow (Ui_mainWindow, QMainWindow):
             self.config_export_coll_limit.value())
         self.app_config.set_default_export_format(
             self.default_export.currentText())
+        self.app_config.set_default_encoding(
+            self.default_encondig.currentText())
+        self.app_config.set_default_type_export_layout(
+            self.default_layout_type_export.currentText())
+            
         self.app_config.save_config()
         MessageDialogBox(
             "Sucess!", "Configurações Salvas com Sucesso")._ShowMessage()
         self.LoadConfig()
 
     def ResetConfig(self):
-        return self.app_config.default_config()
+        self.app_config.default_config()
+        self.LoadConfig()
+        return True
 
     def SetButtonsState(self, state):
         self.btn_cria_xls_template.setEnabled(state)
@@ -209,12 +224,10 @@ class MainWindow (Ui_mainWindow, QMainWindow):
 
         save_file_filter = "Excel (*.csv)" if type_format == 'csv' else "Excel (*.xlsx)" 
 
-        save_file = QFileDialog.getSaveFileName(
-            self, "Salvar Arquivo", "", save_file_filter)
+        save_file = QFileDialog.getSaveFileName(self, "Salvar Arquivo", "", save_file_filter)
 
         if not save_file[0]:
-            self.ShowWarningMessage(
-                "Atenção", "Selecione um local para salvar o arquivo")
+            self.ShowWarningMessage("Atenção", "Selecione um local para salvar o arquivo")
             self.SetButtonsState(True)
             return False
 
@@ -222,19 +235,17 @@ class MainWindow (Ui_mainWindow, QMainWindow):
 
         option_export = option
         data = self.ValidadorTemplate.data
-        dict_erros = self.loggerViewWidget._current_json
-        self.threadExport = ExportDataFrame(
-            dataframe=data, dict_erros=dict_erros, path=save_file[0], option_export=option_export,validation_template=self.ValidadorTemplate)
-        self.threadExport.progressbar_value.connect(
-            self.ExportToXlsProgressValue)
-        self.threadExport.progressbar_text.connect(
-            self.ExportToXlsProgressText)
+        dict_erros = self.loggerViewWidget._current_json    
+        self.threadExport = ExportDataFrame(dataframe=data, dict_erros=dict_erros, path=save_file[0], option_export=option_export,validation_template=self.ValidadorTemplate,AppConfig=self.app_config)
+        self.threadExport.log_info.connect(lambda x: self.loggerViewWidget.add_log_system(x))
+        self.threadExport.progressbar_value.connect(self.ExportToXlsProgressValue)
+        self.threadExport.progressbar_text.connect(self.ExportToXlsProgressText)
         self.threadExport.finished_success.connect(FinishExport)
         self.threadExport.finished_error.connect(lambda x: ExportErro(x))
         self.threadExport.finished_none_log.connect(NenhunLogEncontrado)
-        self.threadExport.start()
         self.threadExport.finished.connect(self.threadExport.quit)
         self.threadExport.finished.connect(self.threadExport.deleteLater)
+        self.threadExport.start()
 
     def ShowWarningMessage(self, title, message):
         self.SetButtonsState(True)
@@ -287,38 +298,20 @@ class MainWindow (Ui_mainWindow, QMainWindow):
 
             sliceframe = data.iloc[start:end]
             # SIGNALS
-            RunableworkerValidador = WorkerThreadValidacao(
-                dataframe=sliceframe, template_name=template_name, start=start, end=end, number_thread=i)
-            RunableworkerValidador.signals.progressbar_value.connect(
-                lambda x: self.ProgressBarValue(x))
-            RunableworkerValidador.signals.progressbar_text.connect(
-                lambda x: self.ProgressBarText(x))
-            RunableworkerValidador.signals.set_logger.connect(
-                lambda x: self.AppendLoggerThread(x))
-            RunableworkerValidador.signals.finished.connect(
-                lambda i=i: self.ControlThread.finish_job_thread(id_thread=list_exec[i]))
+            RunableworkerValidador = WorkerThreadValidacao(dataframe=sliceframe, template_name=template_name, start=start, end=end, number_thread=i)
+            RunableworkerValidador.signals.progressbar_value.connect(lambda x: self.ProgressBarValue(x))
+            RunableworkerValidador.signals.progressbar_text.connect(lambda x: self.ProgressBarText(x))
+            RunableworkerValidador.signals.set_logger.connect(lambda x: self.AppendLoggerThread(x))
+            RunableworkerValidador.signals.finished.connect(lambda i=i: self.ControlThread.finish_job_thread(id_thread=list_exec[i]))
             list_exec.append(RunableworkerValidador)
 
             self.ControlThread.counter_thread += 1
 
         self.ControlThread.start_jobs_thread(QRunable=list_exec)
         
-    def StartValidationDuplites(self): 
-        
-        RunableworkerValidadoDuplicadas = WorkerValidadorDuplicadas(
-            dataframe=self.ValidadorTemplate.data, template_name=self.TemplateInputWidget.template_name)
-        RunableworkerValidadoDuplicadas.signals.progressbar_value.connect(
-            lambda x: self.ProgressBarValue(x))
-        RunableworkerValidadoDuplicadas.signals.progressbar_text.connect(
-            lambda x: self.ProgressBarText(x))
-        RunableworkerValidadoDuplicadas.signals.set_logger.connect(
-            lambda x: self.AppendLoggerThread(x))
-        RunableworkerValidadoDuplicadas.signals.start_painter_rows.connect(
-            lambda: self.PainterRows())
-        self.ControlThread.start_single_thread(
-            QRunable=RunableworkerValidadoDuplicadas)
 
     def PainterRows(self):
+
         # WORKER DATA
         # ///////////////////////////////////////////////////////////////
         dict_erros = self.loggerViewWidget._current_json  # pega o dict de erros do logger
@@ -327,31 +320,19 @@ class MainWindow (Ui_mainWindow, QMainWindow):
         qt_rows = self.ValidadorTemplate.data.shape[0]  # qt linhas dataframe
         # WORKER PAINTER
         # ///////////////////////////////////////////////////////////////
-        Runableworkerpainter = WorkerPainterThread(
-            dict_erros, qt_headers, qt_rows)
+        Runableworkerpainter = WorkerPainterThread(dict_erros, qt_headers, qt_rows)
         # SIGNALS
         # ///////////////////////////////////////////////////////////////
-        Runableworkerpainter.signals.progressbar_value.connect(
-            lambda x: self.ProgressBarValue(x))
-        Runableworkerpainter.signals.progressbar_text.connect(
-            lambda x: self.ProgressBarText(x))
-        Runableworkerpainter.signals.change_color.connect(
-            lambda x: self.ValidadorTemplate._ChangeColor(x))
-        Runableworkerpainter.signals.set_tooltip.connect(
-            lambda x: self.ValidadorTemplate._SetTollTip(x))
+        Runableworkerpainter.signals.progressbar_value.connect(lambda x: self.ProgressBarValue(x))
+        Runableworkerpainter.signals.progressbar_text.connect(lambda x: self.ProgressBarText(x))
+        Runableworkerpainter.signals.change_color.connect(lambda x: self.ValidadorTemplate._ChangeColor(x))
+        Runableworkerpainter.signals.set_tooltip.connect(lambda x: self.ValidadorTemplate._SetTollTip(x))
 
-        # TESTE UNIQUES
-        Runableworkerpainter.signals.change_color_unique.connect(
-            lambda x: self.ValidadorTemplate._ChangeColorUnique(x))
-        Runableworkerpainter.signals.set_tooltip_unique.connect(
-            lambda x: self.ValidadorTemplate._SetToollTipUnique(x))
 
         # SIGNALS START END FINISHED
         # ///////////////////////////////////////////////////////////////
-        Runableworkerpainter.signals.finished.connect(
-            lambda: self.FinishEnabelBtn())
-        Runableworkerpainter.signals.finished_erros.connect(
-            lambda x: self.FinishValidation(x))
+        Runableworkerpainter.signals.finished.connect(lambda: self.FinishEnabelBtn())
+        Runableworkerpainter.signals.finished_erros.connect(lambda x: self.FinishValidation(x))
         # START THREAD IN POOL
         # ///////////////////////////////////////////////////////////////
         self.ControlThread.start_single_thread(QRunable=Runableworkerpainter)
@@ -398,19 +379,15 @@ class MainWindow (Ui_mainWindow, QMainWindow):
             return True
 
         self.thread = QThread()
-        self.worker = WorkerThread(file_path[0], template_name)
+        self.worker = WorkerThread(path=file_path[0],template_name= template_name,AppConfig=self.app_config)
         self.worker.moveToThread(self.thread)
         self.thread.started.connect(self.worker.run)
         self.TemplateInputWidget.template_name = template_name
-        self.worker.log_info.connect(
-            lambda x: self.loggerViewWidget.add_log_system(x))
-        self.worker.progressbar_value.connect(
-            lambda x: self.ProgressBarValue(x))
+        self.worker.log_info.connect(lambda x: self.loggerViewWidget.add_log_system(x))
+        self.worker.progressbar_value.connect(lambda x: self.ProgressBarValue(x))
         self.worker.progressbar_text.connect(lambda x: self.ProgressBarText(x))
-        self.worker.valid_signal.connect(
-            lambda x: TemplateInvalid(x) if x[0] == False else TemplateCarregado())
-        self.worker.values_data.connect(
-            lambda x: self.TemplateInputWidget._Set_Data(x))
+        self.worker.valid_signal.connect(lambda x: TemplateInvalid(x) if x[0] == False else TemplateCarregado())
+        self.worker.values_data.connect(lambda x: self.TemplateInputWidget._Set_Data(x))
 
         self.worker.finished.connect(self.thread.quit)
         self.worker.finished.connect(self.worker.deleteLater)
@@ -478,6 +455,8 @@ class MainWindow (Ui_mainWindow, QMainWindow):
         self.SetTemplatesList()
         self.SetViewTemplate(None, None)
         self.name_template_view.setText("View Template")
+        MessageDialogBox(
+            "Sucesso", "Template deletado com sucesso")._ShowMessage()
 
     def GeraTemplate(self):
         quetion = MessageDialogBox(
@@ -553,7 +532,8 @@ class MainWindow (Ui_mainWindow, QMainWindow):
                         "Atenção", "já existe um template com esse nome")._ShowWarning()
                     return True
                 self.SetTemplatesList()
-
+                MessageDialogBox(
+                    "Sucesso", "Template criado com sucesso")._ShowMessage()
                 return True
 
         return super(MainWindow, self).eventFilter(obj, event)

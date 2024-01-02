@@ -3,6 +3,7 @@ from models.Database import Database
 from models.MessageDialogBox import MessageDialogBox
 
 
+
 class WorkerThread(QObject):
     finished = Signal()
     values_data = Signal(pd.DataFrame)  # dataframe
@@ -13,7 +14,7 @@ class WorkerThread(QObject):
     rows_count = Signal(int)
     log_info = Signal(str)
 
-    def __init__(self, path, template_name, parent=None):
+    def __init__(self, path, template_name, AppConfig,parent=None):
         super().__init__(parent)
 
         self.path_xlsx = path
@@ -21,9 +22,31 @@ class WorkerThread(QObject):
         self.valid = False
         self.type_file = None
         self.dba = Database()
+        self.app_config = AppConfig
+        
+        ##
+        self._default_encoding = self.app_config.get_default_encoding()
+
+                
+
+
 
     def run(self):
-        
+
+
+        if self._default_encoding == "auto":
+            try:
+                self._default_encoding = open(self.path_xlsx).encoding
+                self.log_info.emit(f"Input-Encoding do arquivo: {self._default_encoding}")   
+                self.app_config._encoding_current_file = self._default_encoding
+            except Exception as e:
+                self.log_info.emit(f"Input-Error ao obter encoding do arquivo: {e}")
+                self.log_info.emit("Input-Será utilizado o encoding padrão: utf_8")
+                self._default_encoding = 'utf_8'
+        else:
+            self.log_info.emit(f"Input-Encoding Manual in Settings: {self._default_encoding}")
+
+
         self.valid = self._ValidaPathXlsx()
         if self.valid[0]:
             self._SetTable()
@@ -45,7 +68,8 @@ class WorkerThread(QObject):
                     if valid:
                         return [True, "Planilha Valida!"]
                     else:
-                        text = [False,"Planilha Invalida!", f" A quantidade de campos do template {self.template_name} possui : {count_db}\n E a Planilha Importada Possui: {coutn_excel} \n Verifique os campos da planilha importada "]
+                        text = [False, "Planilha Invalida!",
+                                f" A quantidade de campos do template {self.template_name} possui : {count_db}\n E a Planilha Importada Possui: {coutn_excel} \n Verifique os campos da planilha importada "]
                         return text
                 else:
                     return False
@@ -109,7 +133,7 @@ class WorkerThread(QObject):
         headers = [i[0]
                    for i in self.dba.select_camposnome_template(self.template_name)]
         random_name = str(uuid.uuid4())  # random name for the temporary CSV
-    
+
         self.log_info.emit("Loading Spreadsheet...")
         self.log_info.emit(f"Random Name: {random_name} in {self.path_xlsx}")
 
@@ -119,36 +143,29 @@ class WorkerThread(QObject):
 
             excel = win32.gencache.EnsureDispatch('Excel.Application')
             wb = excel.Workbooks.Open(path_xlsx)
+            wb.SaveAs(path_csv, FileFormat=6)
+            wb.Close(False)
+            excel.Application.Quit()
 
-            try:
-                wb.SaveAs(path_csv, FileFormat=6)
-                self.log_info.emit("CSV Converted using Engine:w32com")
-            except Exception as e:
-                self.log_info.emit(f"An error occurred while saving as CSV using w32com: {e}")
-                xlsx_xls_to_csv2(path_xlsx, path_csv)
+            self.log_info.emit("CSV Converted using Engine:w32com")
+            return True
 
-            finally:
-                wb.Close(False)
-                excel.Application.Quit()
-        
-
-        
         def xlsx_xls_to_csv2(path_xlsx, path_csv):
             path_xlsx = os.path.abspath(path_xlsx)
             path_csv = os.path.abspath(path_csv)
             self.log_info.emit("Trying to convert using Xlsx2csv...")
             try:
+                
                 Xlsx2csv(path_xlsx,
-                    outputencoding="utf-8" ,
-                    dateformat ='%d/%m/%Y',
-                    delimiter=';' 
-                    ).convert(path_csv)
+                         outputencoding=self._default_encoding,
+                         dateformat='%d/%m/%Y',
+                         delimiter=';'
+                         ).convert(path_csv)
+                
                 self.log_info.emit("Sucess! Using Engine Xlsx2csv")
             except Exception as e:
                 self.log_info.emit(f"Error ao converter Using Engine Xlsx2csv: {e}")
                 return False
-                
-
 
         def load_dataframe(file_type):
             try:
@@ -157,21 +174,30 @@ class WorkerThread(QObject):
                     # logger
                     self.log_info.emit(
                         f"File is {file_type} Converting Spreadsheet to CSV...")
+
                     path_csv = os.path.join(
                         os.getcwd(), f'{str(random_name)}.csv')
-                    print(path_csv)
-                    xlsx_xls_to_csv(self.path_xlsx, path_csv)
-                    df = pd.read_csv(path_csv, sep=';', dtype=str,
-                                     encoding_errors='ignore', low_memory=False,keep_default_na=False,encoding='latin-1')
+
+                    try:
+                        xlsx_xls_to_csv(self.path_xlsx, path_csv)
+                    except Exception as e:
+                        self.log_info.emit(
+                            f"An error occurred while converting the spreadsheet to CSV using Engine:w32com: {e}")
+                        xlsx_xls_to_csv2(self.path_xlsx, path_csv)
+
+                    df = pd.read_csv(path_csv, sep=';', dtype=str, encoding_errors='ignore',
+                                     low_memory=False, keep_default_na=False, encoding=self._default_encoding)
                     self.log_info.emit("CSV Buffer DF Loaded, Removing CSV...")
+
                     os.remove(path_csv)
+
                     self.log_info.emit("CSV Removed!")
                     self.log_info.emit("Sucess!")
 
                 elif file_type == 'csv':
                     self.log_info.emit("File is CSV, Loading CSV...")
-                    df = pd.read_csv(
-                        self.path_xlsx, sep=';', dtype=str, encoding_errors='ignore', low_memory=False,keep_default_na=False,encoding='latin-1')
+                    df = pd.read_csv(self.path_xlsx, sep=';', dtype=str, encoding_errors='ignore',
+                                     low_memory=False, keep_default_na=False, encoding=self._default_encoding)
                 else:
                     raise ValueError("Unsupported file type")
             except Exception as e:
@@ -181,11 +207,11 @@ class WorkerThread(QObject):
                     "Error ao converter Planilha para CSV, será carregado o formato original...")
 
                 if file_type == 'xlsx' or file_type == 'xls':
-                    df = pd.read_excel(
-                        self.path_xlsx, dtype=str)
+                    df = pd.read_excel(self.path_xlsx, dtype=str)
+
                 elif file_type == 'csv':
-                    df = pd.read_csv(
-                        self.path_xlsx, sep=';', dtype=str, encoding_errors='ignore', low_memory=False,keep_default_na=False,encoding='latin-1')
+                    df = pd.read_csv(self.path_xlsx, sep=';', dtype=str, encoding_errors='ignore',
+                                     low_memory=False, keep_default_na=False, encoding=self._default_encoding)
                 else:
                     raise ValueError("Unsupported file type")
 

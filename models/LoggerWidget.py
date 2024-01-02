@@ -25,7 +25,7 @@ class LoggerWidget(QPlainTextEdit):
         self.setTabChangesFocus(True)
         self.setAcceptDrops(False)
 
-    def Cabeçalho(self):
+    def Cabecalho(self):
         string_v = f"""
         =================================================
          LOG DE ERROS {datetime.now()}
@@ -35,7 +35,7 @@ class LoggerWidget(QPlainTextEdit):
 
     def add_log(self, log):
         self._current_json = log
-        self._log += self.Cabeçalho()
+        self._log += self.Cabecalho()
 
         log = json.dumps(log, indent=4, ensure_ascii=False)
 

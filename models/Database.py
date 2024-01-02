@@ -119,7 +119,6 @@ class Database:
         if exists > 0:
             return False
         else:
-            print(lista_campos)
             for items in lista_campos:
                 self.cursor.execute("""INSERT INTO templates (template_nome, campo_ordem,campo_nome, campo_tipo, campo_tamanho, campo_obrigatorio,onlylistValue,ListValue,unique_coll) VALUES (?,?,?,?,?,?,?,?,?)""", (
                     template_nome, items[0], items[1], items[2], items[3], items[4], items[5], items[6], items[7]))
